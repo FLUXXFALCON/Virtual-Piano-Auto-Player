@@ -325,12 +325,12 @@ CreateGUI() {
     Gui, Add, Button, x300 y345 w80 h35 gSaveToFile, SAVE FILE
     Gui, Add, Button, x390 y345 w80 h35 gShowHelp, HELP
 
-    Gui, Add, Button, x30 y385 w120 h25 gToggleRecordMode, RECORD MODE: OFF
+    Gui, Add, Button, x30 y385 w120 h25 gToggleRecordMode, ANTI OBS: OFF
 
     Gui, Font, s8 Normal c0xFF4500
-    Gui, Add, Text, x160 y390 w280 h15 vRecordingStatusOFF, Screen Capture Protection: OFF
+    Gui, Add, Text, x160 y390 w280 h15 vRecordingStatusOFF, Anti OBS: OFF
     Gui, Font, s8 Normal c0x00FF00
-    Gui, Add, Text, x160 y390 w280 h15 vRecordingStatusON Hidden, Screen Capture Protection: ON
+    Gui, Add, Text, x160 y390 w280 h15 vRecordingStatusON Hidden, Anti OBS: ON
 
     Gui, Font, s9 Normal c0x00FF00
     Gui, Add, Progress, x30 y420 w430 h15 vProgressBar Background0x404040 c0x00FF00
@@ -1063,13 +1063,13 @@ if (!hWnd)
     WinGet, hWnd, ID, Virtual Piano Auto Player v4.0
 if (isRecordModeOn) {
     DllCall("user32.dll\SetWindowDisplayAffinity", "ptr", hWnd, "uint", 0x00)
-    GuiControl,, ToggleRecordMode, RECORD MODE: OFF
+    GuiControl,, ToggleRecordMode, ANTI OBS: OFF
     GuiControl, Show, RecordingStatusOFF
     GuiControl, Hide, RecordingStatusON
     isRecordModeOn := false
 } else {
     DllCall("user32.dll\SetWindowDisplayAffinity", "ptr", hWnd, "uint", 0x11)
-    GuiControl,, ToggleRecordMode, RECORD MODE: ON
+    GuiControl,, ToggleRecordMode, ANTI OBS: ON
     GuiControl, Hide, RecordingStatusOFF
     GuiControl, Show, RecordingStatusON
     isRecordModeOn := true
