@@ -336,13 +336,6 @@ CreateGUI() {
     Gui, Add, Progress, x30 y420 w430 h15 vProgressBar Background0x404040 c0x00FF00
     Gui, Add, Text, x30 y440 w430 h20 vStatus Center c0x90EE90, Ready - VirtualPiano Sheet Loaded
 
-    Gui, Font, s8 Normal c0xFFD700
-    Gui, Add, Text, x30 y465 w200, Current Controls:
-    Gui, Add, Text, x30 y480 w200 vMouseControlsText, Play: F1 | Stop: F2
-    Gui, Add, Text, x250 y465 w200, System: F3=Reset | F12=Record | ESC=Stop
-    Gui, Add, Text, x250 y480 w200, BPM: PageUp/PageDown
-    Gui, Add, Text, x30 y495 w430, Format: [6f] [9T] [*h] - rest: ---- | VP Sheet uyumlu
-
     Gui, Color, 0x2C2C2C
     
     Gui, +AlwaysOnTop +MinimizeBox -MaximizeBox +LastFound
@@ -350,7 +343,6 @@ CreateGUI() {
     WinGet, hWnd, ID, Virtual Piano Auto Player
 
     GuiControl, Focus, UserInput
-    UpdateMouseControlsText()
     UpdateStatus("Ready!", 0)
 }
 
@@ -730,7 +722,6 @@ Gui, Settings:Submit
 SaveSettingsToFile()
 ResetAllHotkeys()
 SetupAllHotkeys()
-UpdateMouseControlsText()
 UpdateStatus("Keys updated!", 2000)
 return
 
@@ -744,7 +735,6 @@ StopKey := "F2"
 SaveSettingsToFile()
 ResetAllHotkeys()
 SetupAllHotkeys()
-UpdateMouseControlsText()
 Gui, Settings:Destroy
 UpdateStatus("Keys reset!", 2000)
 return
@@ -863,10 +853,7 @@ StopAction:
 StopPlayback()
 return
 
-UpdateMouseControlsText() {
-    controlText := "Play: " . PlayPauseKey . " | Stop: " . StopKey
-    GuiControl,, MouseControlsText, %controlText%
-}
+
 
 ; ============================================================
 ; AYARLAR KAYIT/YUKLE
