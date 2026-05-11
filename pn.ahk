@@ -351,7 +351,7 @@ CreateGUI() {
     Gui, Add, Text, x30 y440 w100, HUMANIZE:
     Gui, Font, s9 Normal c0xFFFFFF
     Gui, Add, Slider, x130 y435 w250 h30 vHumanizeSlider gHumanizeChange Range0-100, %HumanizeLevel%
-    Gui, Add, Text, x385 y440 w40 vHumanizeText, %HumanizeLevel%%%
+    Gui, Add, Text, x385 y440 w40 vHumanizeText, %HumanizeLevel%`%
 
     Gui, Font, s9 Normal c0x90EE90
     Gui, Add, Text, x30 y475 w430 h20 vStatus Center, Ready
@@ -924,6 +924,9 @@ LoadSettings() {
         HumanizeLevel := 30
     if (HoldLevel = "ERROR")
         HoldLevel := 80
+        
+    GuiControl,, HumanizeSlider, %HumanizeLevel%
+    GuiControl,, HumanizeText, %HumanizeLevel%`%
 }
 
 ; ============================================================
@@ -1075,7 +1078,7 @@ SliderChange:
 HumanizeChange:
     Gui, Submit, NoHide
     HumanizeLevel := HumanizeSlider
-    GuiControl,, HumanizeText, %HumanizeLevel%%%
+    GuiControl,, HumanizeText, %HumanizeLevel%`%
     return
 
 DurationChange:
@@ -1112,7 +1115,7 @@ SetTempo(newBPM) {
 ; ============================================================
 ToggleRecordMode:
 if (!hWnd)
-    WinGet, hWnd, ID, Virtual Piano Auto Player v4.0
+    WinGet, hWnd, ID, Virtual Piano Auto Player
 if (isRecordModeOn) {
     DllCall("user32.dll\SetWindowDisplayAffinity", "ptr", hWnd, "uint", 0x00)
     GuiControl,, ToggleRecordMode, ANTI OBS: OFF
