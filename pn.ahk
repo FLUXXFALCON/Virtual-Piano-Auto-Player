@@ -316,52 +316,52 @@ CreateGUI() {
     Gui, Font, s9 Bold c0x000000
     Gui, Add, Button, x470 y95 w40 h45 gShowSettings, SET
 
+    Gui, Font, s9 Normal c0xE0E0E0
+    Gui, Add, Text, x30 y145 w80, Humanize:
+    Gui, Font, s9 Normal c0xFFFFFF
+    Gui, Add, Slider, x120 y140 w150 h25 vHumanizeSlider gHumanizeChange Range0-100, %HumanizeLevel%
+    Gui, Add, Text, x280 y145 w40 vHumanizeText, % HumanizeLevel "%"
+
     Gui, Font, s11 Bold c0xFFFFFF
-    Gui, Add, Text, x20 y160, SHEET MUSIC
+    Gui, Add, Text, x20 y180, SHEET MUSIC
 
     Gui, Font, s9 Normal c0xE0E0E0
-    Gui, Add, Text, x30 y185, Quick Load:
+    Gui, Add, Text, x30 y205, Quick Load:
     Gui, Font, s9 Normal c0x000000
-    Gui, Add, DropDownList, x100 y182 w200 h200 vSampleSongs gLoadSample, Select Song
+    Gui, Add, DropDownList, x100 y202 w200 h200 vSampleSongs gLoadSample, Select Song
 
     Gui, Font, s9 Bold c0x00FF00
-    Gui, Add, Checkbox, x310 y185 w60 h20 vLoopCheckbox gToggleLoop, LOOP
+    Gui, Add, Checkbox, x310 y205 w60 h20 vLoopCheckbox gToggleLoop, LOOP
 
     Gui, Font, s8 Normal c0xFFD700
-    Gui, Add, Text, x375 y187 w90 h15, (Off - Single Play)
+    Gui, Add, Text, x375 y207 w90 h15, (Off - Single Play)
 
     UpdateSongsDropdown()
 
     Gui, Font, s9 Normal c0x000000
-    Gui, Add, Edit, x30 y210 w430 h120 vUserInput VScroll +Wrap Background0xFFFFFF c0x000000,
+    Gui, Add, Edit, x30 y230 w430 h120 vUserInput VScroll +Wrap Background0xFFFFFF c0x000000,
 
     Gui, Font, s10 Bold c0x000000
-    Gui, Add, Button, x30 y345 w80 h35 gPlayPause +Default, PLAY
-    Gui, Add, Button, x120 y345 w80 h35 gStopReset, STOP
-    Gui, Add, Button, x210 y345 w80 h35 gLoadFromFile, LOAD FILE
-    Gui, Add, Button, x300 y345 w80 h35 gSaveToFile, SAVE FILE
-    Gui, Add, Button, x390 y345 w80 h35 gShowHelp, HELP
+    Gui, Add, Button, x30 y365 w80 h35 gPlayPause +Default, PLAY
+    Gui, Add, Button, x120 y365 w80 h35 gStopReset, STOP
+    Gui, Add, Button, x210 y365 w80 h35 gLoadFromFile, LOAD FILE
+    Gui, Add, Button, x300 y365 w80 h35 gSaveToFile, SAVE FILE
+    Gui, Add, Button, x390 y365 w80 h35 gShowHelp, HELP
 
-    Gui, Add, Button, x30 y385 w120 h25 gToggleRecordMode, ANTI OBS: OFF
+    Gui, Add, Button, x30 y405 w120 h25 gToggleRecordMode, ANTI OBS: OFF
 
     Gui, Font, s8 Normal c0xFF4500
-    Gui, Add, Text, x160 y390 w280 h15 vRecordingStatusOFF, Anti OBS: OFF
+    Gui, Add, Text, x160 y410 w280 h15 vRecordingStatusOFF, Anti OBS: OFF
     Gui, Font, s8 Normal c0x00FF00
-    Gui, Add, Text, x160 y390 w280 h15 vRecordingStatusON Hidden, Anti OBS: ON
-
-    Gui, Font, s9 Bold c0x00FF00
-    Gui, Add, Text, x30 y440 w100, HUMANIZE:
-    Gui, Font, s9 Normal c0xFFFFFF
-    Gui, Add, Slider, x130 y435 w250 h30 vHumanizeSlider gHumanizeChange Range0-100, %HumanizeLevel%
-    Gui, Add, Text, x385 y440 w40 vHumanizeText, % HumanizeLevel "%"
+    Gui, Add, Text, x160 y410 w280 h15 vRecordingStatusON Hidden, Anti OBS: ON
 
     Gui, Font, s9 Normal c0x90EE90
-    Gui, Add, Text, x30 y475 w430 h20 vStatus Center, Ready
+    Gui, Add, Text, x30 y450 w430 h20 vStatus Center, Ready
     
     Gui, Color, 0x2C2C2C
     
     Gui, +AlwaysOnTop +MinimizeBox -MaximizeBox +LastFound
-    Gui, Show, w520 h530, Virtual Piano Auto Player
+    Gui, Show, w520 h490, Virtual Piano Auto Player
     WinGet, hWnd, ID, Virtual Piano Auto Player
 
     GuiControl, Focus, UserInput
