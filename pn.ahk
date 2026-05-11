@@ -319,7 +319,7 @@ CreateGUI() {
     Gui, Font, s9 Normal c0xE0E0E0
     Gui, Add, Text, x30 y145 w80, Humanize:
     Gui, Font, s9 Normal c0xFFFFFF
-    Gui, Add, Slider, x120 y140 w150 h25 vHumanizeSlider gHumanizeChange Range0-100, %HumanizeLevel%
+    Gui, Add, Slider, x120 y140 w150 h25 vHumanizeSlider gHumanizeChange Range0-100 ToolTip +AltSubmit, %HumanizeLevel%
     Gui, Add, Text, x280 y145 w40 vHumanizeText, % HumanizeLevel "%"
 
     Gui, Font, s11 Bold c0xFFFFFF
