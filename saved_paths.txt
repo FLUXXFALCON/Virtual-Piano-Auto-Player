@@ -1,14 +1,15 @@
-easy_katyusha|||C:\Users\Fluxx\Desktop\dosyalar\rb\easy_katyusha.txt
-Interstellar|||C:\Users\Fluxx\Desktop\dosyalar\rb\Interstellar.txt
-izmir|||C:\Users\Fluxx\Desktop\dosyalar\rb\izmir.txt
-izwmirr|||C:\Users\Fluxx\Desktop\dosyalar\rb\izwmirr.txt
-kalinka|||C:\Users\Fluxx\Desktop\dosyalar\rb\kalinka.txt
-katysuha|||C:\Users\Fluxx\Desktop\dosyalar\rb\katysuha.txt
-katysuha_full|||C:\Users\Fluxx\Desktop\dosyalar\rb\katysuha_full.txt
-La maritza|||C:\Users\Fluxx\Desktop\dosyalar\rb\La maritza.txt
-Passacaglia|||C:\Users\Fluxx\Desktop\dosyalar\rb\Passacaglia.txt
-rush e|||C:\Users\Fluxx\Desktop\dosyalar\rb\rush e.txt
-sans|||C:\Users\Fluxx\Desktop\dosyalar\rb\sans.txt
-Tetris|||C:\Users\Fluxx\Desktop\dosyalar\rb\Tetris.txt
-The Rose Garden|||C:\Users\Fluxx\Desktop\dosyalar\rb\The Rose Garden.txt
-valse|||C:\Users\fluxx\Desktop\dosyalar\rb\valse.txt
+easy_katyusha|||sheets\Traditional\easy_katyusha.txt
+Interstellar|||sheets\Movies\Interstellar.txt
+izmir|||sheets\Traditional\izmir.txt
+izwmirr|||sheets\Traditional\izwmirr.txt
+kalinka|||sheets\Traditional\kalinka.txt
+katysuha|||sheets\Traditional\katysuha.txt
+katysuha_full|||sheets\Traditional\katysuha_full.txt
+La maritza|||sheets\Other\La maritza.txt
+Passacaglia|||sheets\Classical\Passacaglia.txt
+rush e|||sheets\Other\rush e.txt
+sans|||sheets\Games\sans.txt
+Tetris|||sheets\Games\Tetris.txt
+The Rose Garden|||sheets\Other\The Rose Garden.txt
+valse|||sheets\Classical\valse.txt
+Kambulat|||sheets\Other\Kambulat.txt

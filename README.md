@@ -11,6 +11,13 @@ Virtual Piano (virtualpiano.net) sheet music formatını otomatik olarak çalan,
 - **Özelleştirilebilir Tuşlar**: Play/Pause ve Stop komutlarını istediğiniz tuşa atayabilirsiniz.
 - **Ekran Yakalama Koruması**: Kayıt yaparken GUI'yi gizleme seçeneği.
 
+## Klasör Yapısı
+
+- `pn.ahk`: Ana uygulama dosyası.
+- `sheets/`: Kategorize edilmiş nota sayfaları (Classical, Games, Movies, Traditional, Other).
+- `LICENSE`: MIT Lisans dosyası.
+- `README.md`: Proje dökümantasyonu.
+
 ## Kullanım
 
 1. `pn.ahk` dosyasını çalıştırın (AutoHotkey yüklü olmalıdır).

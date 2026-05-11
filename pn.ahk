@@ -914,6 +914,12 @@ LoadSavedPaths() {
                     if (SeparatorPos > 0) {
                         SongName := Trim(SubStr(CurrentLine, 1, SeparatorPos - 1))
                         FilePath := Trim(SubStr(CurrentLine, SeparatorPos + 3))
+                        
+                        ; Check if path is relative or if absolute path doesn't exist
+                        if (FilePath != "" && !InStr(FilePath, ":")) {
+                            FilePath := A_ScriptDir . "\" . FilePath
+                        }
+                        
                         if (SongName != "" && FilePath != "" && FileExist(FilePath))
                             SavedSongPaths[SongName] := FilePath
                     }
@@ -927,8 +933,14 @@ SavePathsToFile() {
     FileDelete, %PathsFile%
     FileContent := ""
     for songName, filePath in SavedSongPaths {
-        if FileExist(filePath)
-            FileContent .= songName . "|||" . filePath . "`r`n"
+        if FileExist(filePath) {
+            ; If file is in the script directory, save as relative path
+            savePath := filePath
+            if (InStr(filePath, A_ScriptDir) = 1) {
+                savePath := SubStr(filePath, StrLen(A_ScriptDir) + 2)
+            }
+            FileContent .= songName . "|||" . savePath . "`r`n"
+        }
     }
     if (FileContent != "")
         FileAppend, %FileContent%, %PathsFile%
