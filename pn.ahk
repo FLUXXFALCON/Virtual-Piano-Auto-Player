@@ -276,9 +276,6 @@ CreateGUI() {
     Gui, Font, s14 Bold c0x1E90FF
     Gui, Add, Text, x20 y15 w480 Center, VIRTUAL PIANO AUTO PLAYER
     
-    Gui, Font, s8 Normal c0x808080
-    Gui, Add, Text, x20 y40 w480 Center, Performance Edition v5.6 - Professional Timing Engine
-
     Gui, Font, s11 Bold c0xFFFFFF
     Gui, Add, Text, x20 y70, CONTROL PANEL
 
@@ -337,7 +334,7 @@ CreateGUI() {
 
     Gui, Font, s9 Normal c0x00FF00
     Gui, Add, Progress, x30 y420 w430 h15 vProgressBar Background0x404040 c0x00FF00
-    Gui, Add, Text, x30 y440 w430 h20 vStatus Center c0x90EE90, Ready - VirtualPiano Sheet Format Yuklendi
+    Gui, Add, Text, x30 y440 w430 h20 vStatus Center c0x90EE90, Ready - VirtualPiano Sheet Loaded
 
     Gui, Font, s8 Normal c0xFFD700
     Gui, Add, Text, x30 y465 w200, Current Controls:
@@ -349,12 +346,12 @@ CreateGUI() {
     Gui, Color, 0x2C2C2C
     
     Gui, +AlwaysOnTop +MinimizeBox -MaximizeBox +LastFound
-    Gui, Show, w520 h530, Virtual Piano Auto Player v6.0
-    WinGet, hWnd, ID, Virtual Piano Auto Player v6.0
+    Gui, Show, w520 h530, Virtual Piano Auto Player
+    WinGet, hWnd, ID, Virtual Piano Auto Player
 
     GuiControl, Focus, UserInput
     UpdateMouseControlsText()
-    UpdateStatus("Performance Engine v6.0 Ready!", 0)
+    UpdateStatus("Ready!", 0)
 }
 
 ; ============================================================
@@ -368,7 +365,7 @@ StartPlayback() {
     rawInput := Trim(rawInput)
 
     if (rawInput = "") {
-        UpdateStatus("Sheet music bos!", 3000)
+        UpdateStatus("Sheet music is empty!", 3000)
         return
     }
 
@@ -393,7 +390,7 @@ StartPlayback() {
 
     GuiControl,, PlayPause, PAUSE
     UpdateProgressBar(0)
-    UpdateStatus("Caliniyor (Real-Time BPM)...", 0)
+    UpdateStatus("Playing...", 0)
 
     SetTimer, PlaybackTick, 1
 }
@@ -485,7 +482,7 @@ PlaybackTick() {
         if (isLoopEnabled) {
             QueuePosition := 1
             CurrentBeat := 0
-            UpdateStatus("Loop - Yeniden basliyor...", 1000)
+            UpdateStatus("Loop - Restarting...", 1000)
         } else {
             CompletePlayback()
         }
@@ -496,7 +493,7 @@ PausePlayback() {
     isPaused := true
     isPlaying := false
     GuiControl,, PlayPause, RESUME
-    UpdateStatus("Duraklatildi", 0)
+    UpdateStatus("Paused", 0)
     SetTimer, PlaybackTick, Off
     DllCall("QueryPerformanceCounter", "Int64*", PauseTimeQPC)
     ReleaseVPKeys()
@@ -506,7 +503,7 @@ ResumePlayback() {
     isPaused := false
     isPlaying := true
     GuiControl,, PlayPause, PAUSE
-    UpdateStatus("Devam ediyor...", 0)
+    UpdateStatus("Resuming...", 0)
     
     ; Reset LastTick so we don't jump forward after pause
     DllCall("QueryPerformanceCounter", "Int64*", LastTickQPC)
@@ -522,7 +519,7 @@ StopPlayback() {
     QueuePosition := 0
     GuiControl,, PlayPause, PLAY
     UpdateProgressBar(0)
-    UpdateStatus("Durduruldu.", 0)
+    UpdateStatus("Stopped.", 0)
 }
 
 CompletePlayback() {
@@ -535,7 +532,7 @@ CompletePlayback() {
     GuiControl,, PlayPause, PLAY
     UpdateProgressBar(100)
     playbackTime := Round((A_TickCount - playbackStartTime) / 1000, 1)
-    UpdateStatus("Tamamlandi!", 0)
+    UpdateStatus("Completed!", 0)
     SetTimer, ResetProgress, 3000
 }
 
@@ -577,7 +574,7 @@ CreateSettingsGUI() {
     Gui, Settings:Add, Button, x210 y174 w80 h25 gWaitForStopKey, SET KEY
 
     Gui, Settings:Font, s8 Normal c0xFFD700
-    Gui, Settings:Add, Text, x20 y210, Herhangi bir tusa basin: F1-F12, A-Z, Mouse4/5 desteklenir
+    Gui, Settings:Add, Text, x20 y210, Press any key: F1-F12, A-Z, Mouse4/5 supported
 
     Gui, Settings:Font, s9 Bold c0x000000
     Gui, Settings:Add, Button, x20 y250 w80 h30 gSaveSettings, SAVE
@@ -695,7 +692,7 @@ if (isWaitingForKey) {
     else if (pressedKey = "MButton")
         pressedKey := "MiddleClick"
     else if (pressedKey = "LButton" || pressedKey = "RButton") {
-        UpdateStatus("LMB/RMB atanamaz!", 2000)
+        UpdateStatus("LMB/RMB cannot be assigned!", 2000)
         isWaitingForKey := false
         waitingForKeyType := ""
         return
@@ -734,7 +731,7 @@ SaveSettingsToFile()
 ResetAllHotkeys()
 SetupAllHotkeys()
 UpdateMouseControlsText()
-UpdateStatus("Tuslar guncellendi!", 2000)
+UpdateStatus("Keys updated!", 2000)
 return
 
 CancelSettings:
@@ -749,7 +746,7 @@ ResetAllHotkeys()
 SetupAllHotkeys()
 UpdateMouseControlsText()
 Gui, Settings:Destroy
-UpdateStatus("Tuslar sifirlandi!", 2000)
+UpdateStatus("Keys reset!", 2000)
 return
 
 ToggleLoop:
@@ -757,10 +754,10 @@ Gui, Submit, NoHide
 isLoopEnabled := LoopCheckbox
 if (isLoopEnabled) {
     GuiControl,, Text9, (On - Continuous Loop)
-    UpdateStatus("Loop ACIK - Sarki surekli tekrar eder", 2000)
+    UpdateStatus("Loop ON - Song will repeat", 2000)
 } else {
     GuiControl,, Text9, (Off - Single Play)
-    UpdateStatus("Loop KAPALI - Tek sefer calar", 2000)
+    UpdateStatus("Loop OFF - Single play", 2000)
 }
 SaveSettings()
 return
@@ -966,13 +963,13 @@ if (SampleSongs != "Select Song" && SampleSongs != "") {
             FileRead, FileContent, %filePath%
             if (ErrorLevel = 0) {
                 GuiControl,, UserInput, %FileContent%
-                UpdateStatus("Yuklendi: " . SampleSongs, 2000)
+                UpdateStatus("Loaded: " . SampleSongs, 2000)
             }
         } else {
             SavedSongPaths.Delete(SampleSongs)
             SavePathsToFile()
             UpdateSongsDropdown()
-            UpdateStatus("Dosya bulunamadi, listeden silindi: " . SampleSongs, 3000)
+            UpdateStatus("File not found, removed from list: " . SampleSongs, 3000)
         }
     }
 }
@@ -989,7 +986,7 @@ if (SelectedFile != "") {
         SavedSongPaths[NameNoExt] := SelectedFile
         SavePathsToFile()
         UpdateSongsDropdown()
-        UpdateStatus("Yuklendi: " . NameNoExt, 3000)
+        UpdateStatus("Loaded: " . NameNoExt, 3000)
     }
 }
 return
@@ -997,7 +994,7 @@ return
 SaveToFile:
 Gui, Submit, NoHide
 if (UserInput = "") {
-    UpdateStatus("Kaydedilecek icerik yok!", 2000)
+    UpdateStatus("No content to save!", 2000)
     return
 }
 FileSelectFile, SelectedFile, S16,, Sheet Music Kaydet, Text Files (*.txt)
@@ -1010,7 +1007,7 @@ if (SelectedFile != "") {
         SavedSongPaths[NameNoExt] := SelectedFile
         SavePathsToFile()
         UpdateSongsDropdown()
-        UpdateStatus("Kaydedildi: " . NameNoExt, 3000)
+        UpdateStatus("Saved: " . NameNoExt, 3000)
     }
 }
 return
@@ -1096,23 +1093,23 @@ return
 ; YARDIM
 ; ============================================================
 ShowHelp:
-helpText := "VIRTUAL PIANO AUTO PLAYER v4.0 - VP SHEET FORMAT`n`n"
-helpText .= "DESTEKLENEN FORMAT:`n"
-helpText .= "* [6f]      -> 6 modifier basili + f tusu`n"
-helpText .= "* [9T]      -> 9 modifier basili + Shift+T (buyuk = shift)`n"
-helpText .= "* [6fj]     -> 6 basili + f ve j ayni anda`n"
+helpText := "VIRTUAL PIANO AUTO PLAYER - VP SHEET FORMAT`n`n"
+helpText .= "SUPPORTED FORMAT:`n"
+helpText .= "* [6f]      -> 6 modifier held + f key`n"
+helpText .= "* [9T]      -> 9 modifier held + Shift+T (upper = shift)`n"
+helpText .= "* [6fj]     -> 6 held + f and j simultaneously`n"
 helpText .= "* [*h]      -> * modifier + h`n"
 helpText .= "* [$T]      -> $ modifier + Shift+T`n"
-helpText .= "* [:t'r]    -> ozel karakter chordlar`n"
-helpText .= "* 8         -> sadece 8 tusu`n"
-helpText .= "* -         -> kisa rest (1 birim)`n"
-helpText .= "* ----      -> uzun rest (4 birim)`n`n"
-helpText .= "KONTROLLER:`n"
-helpText .= "* F1=Play/Pause | F2=Stop (ayarlanabilir)`n"
-helpText .= "* F3=Reset | F12=Record Mode | ESC=Acil Durdur`n"
-helpText .= "* PageUp/PageDown = BPM degistir`n"
-helpText .= "* SET butonu = Ozel tus atamalari`n`n"
-helpText .= "virtualpiano.net sheet formatini dogrudan yapistirin!"
+helpText .= "* [:t'r]    -> special character chords`n"
+helpText .= "* 8         -> only the 8 key`n"
+helpText .= "* -         -> short rest (1 unit)`n"
+helpText .= "* ----      -> long rest (4 units)`n`n"
+helpText .= "CONTROLS:`n"
+helpText .= "* F1=Play/Pause | F2=Stop (customizable)`n"
+helpText .= "* F3=Reset | F12=Record Mode | ESC=Emergency Stop`n"
+helpText .= "* PageUp/PageDown = Change BPM`n"
+helpText .= "* SET button = Custom key bindings`n`n"
+helpText .= "Paste virtualpiano.net sheet format directly!"
 MsgBox, 0, Virtual Piano Help, %helpText%
 return
 
@@ -1123,7 +1120,7 @@ ResetPlayer() {
     StopPlayback()
     lastPressedKeys := {}
     ParsedNoteArray := []
-    UpdateStatus("Sifirlandi.", 0)
+    UpdateStatus("Reset.", 0)
 }
 
 PlayPause:
@@ -1146,7 +1143,7 @@ return
 EmergencyStop:
 if (isPlaying || isPaused) {
     StopPlayback()
-    UpdateStatus("ACIL DURDURMA!", 3000)
+    UpdateStatus("EMERGENCY STOP!", 3000)
 }
 return
 
@@ -1176,7 +1173,7 @@ UpdateStatus(message, autoHide := 0) {
 
 ClearStatus:
 SetTimer, ClearStatus, Off
-UpdateStatus("Hazir", 0)
+UpdateStatus("Ready", 0)
 return
 
 UpdateProgressBar(percentage) {
