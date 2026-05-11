@@ -63,6 +63,8 @@ global ActiveHotkeys := {}
 
 ; Parsed note array (global for VP format)
 global ParsedNoteArray := []
+global HumanizeLevel := 30
+global HoldLevel := 80
 
 LoadSavedPaths()
 LoadSettings()
@@ -233,8 +235,21 @@ SendVPKey(key, state := "both") {
         
     downStr := (state = "up") ? " up" : (state = "down") ? " down" : ""
     
-    ; Büyük harf = Shift + Tuş
-    if RegExMatch(key, "[A-Z]") {
+    ; Shift Map for symbols
+    static shiftMap := {"!":"1", "@":"2", "#":"3", "$":"4", "%":"5", "^":"6", "&":"7", "*":"8", "(":"9", ")":"0", "_":"-", "+":"=", "{":"[", "}":"]", ":":";", """":"'", "<":",", ">":".", "?":"/"}
+    
+    if (shiftMap.HasKey(key)) {
+        baseKey := shiftMap[key]
+        if (state = "both") {
+            Send +%baseKey%
+        } else {
+            if (state = "down") {
+                Send {Shift down}{%baseKey% down}
+            } else {
+                Send {%baseKey% up}{Shift up}
+            }
+        }
+    } else if RegExMatch(key, "[A-Z]") {
         lower := Chr(Asc(key) + 32)
         if (state = "both") {
             Send +%lower%
@@ -332,10 +347,15 @@ CreateGUI() {
     Gui, Font, s8 Normal c0x00FF00
     Gui, Add, Text, x160 y390 w280 h15 vRecordingStatusON Hidden, Anti OBS: ON
 
-    Gui, Font, s9 Normal c0x00FF00
-    Gui, Add, Progress, x30 y420 w430 h15 vProgressBar Background0x404040 c0x00FF00
-    Gui, Add, Text, x30 y440 w430 h20 vStatus Center c0x90EE90, Ready - VirtualPiano Sheet Loaded
+    Gui, Font, s9 Bold c0x00FF00
+    Gui, Add, Text, x30 y440 w100, HUMANIZE:
+    Gui, Font, s9 Normal c0xFFFFFF
+    Gui, Add, Slider, x130 y435 w250 h30 vHumanizeSlider gHumanizeChange Range0-100, %HumanizeLevel%
+    Gui, Add, Text, x385 y440 w40 vHumanizeText, %HumanizeLevel%%%
 
+    Gui, Font, s9 Normal c0x90EE90
+    Gui, Add, Text, x30 y475 w430 h20 vStatus Center, Ready
+    
     Gui, Color, 0x2C2C2C
     
     Gui, +AlwaysOnTop +MinimizeBox -MaximizeBox +LastFound
@@ -411,11 +431,19 @@ BuildPlaybackQueue() {
             continue
         }
 
+        ; Humanization: Add random jitter to the onset
+        jitter := 0
+        if (HumanizeLevel > 0) {
+            ; Max jitter of 0.15 beats at 100% humanize
+            jitterRange := (HumanizeLevel / 100) * 0.15
+            Random, jitter, -%jitterRange%, %jitterRange%
+        }
+
         ; Nota veya Akor
         holdBeats := UnitBeats * HoldMultiplier
         
-        eventDown := {beat: currentBeatPos, type: "down", token: token, pos: idx}
-        eventUp := {beat: currentBeatPos + holdBeats, type: "up", token: token}
+        eventDown := {beat: currentBeatPos + jitter, type: "down", token: token, pos: idx}
+        eventUp := {beat: currentBeatPos + jitter + holdBeats, type: "up", token: token}
         
         PlaybackQueue.Push(eventDown)
         PlaybackQueue.Push(eventUp)
@@ -446,6 +474,13 @@ PlaybackTick() {
                 for i, note in event.token.notes {
                     SendVPKey(note, "down")
                     lastPressedKeys[note] := true
+                    
+                    ; Add a tiny random span between notes in a chord (0-15ms)
+                    if (HumanizeLevel > 0) {
+                        Random, span, 0, % (HumanizeLevel / 100) * 15
+                        if (span > 0)
+                            DllCall("Sleep", "UInt", span)
+                    }
                 }
             }
             
@@ -865,19 +900,30 @@ SaveSettingsToFile() {
 }
 
 SaveSettings() {
+    Gui, Submit, NoHide
     IniWrite, %PlayPauseKey%, %ConfigFile%, KeyBindings, PlayPauseKey
     IniWrite, %StopKey%, %ConfigFile%, KeyBindings, StopKey
     IniWrite, %isLoopEnabled%, %ConfigFile%, Settings, LoopEnabled
+    IniWrite, %HumanizeLevel%, %ConfigFile%, Settings, HumanizeLevel
+    IniWrite, %HoldLevel%, %ConfigFile%, Settings, HoldLevel
 }
 
 LoadSettings() {
     IniRead, PlayPauseKey, %ConfigFile%, KeyBindings, PlayPauseKey, F1
     IniRead, StopKey, %ConfigFile%, KeyBindings, StopKey, F2
     IniRead, isLoopEnabled, %ConfigFile%, Settings, LoopEnabled, 0
+    IniRead, HumanizeLevel, %ConfigFile%, Settings, HumanizeLevel, 30
+    IniRead, HoldLevel, %ConfigFile%, Settings, HoldLevel, 80
+    
     if (isLoopEnabled = "ERROR")
         isLoopEnabled := false
     else
         isLoopEnabled := isLoopEnabled ? true : false
+        
+    if (HumanizeLevel = "ERROR")
+        HumanizeLevel := 30
+    if (HoldLevel = "ERROR")
+        HoldLevel := 80
 }
 
 ; ============================================================
@@ -1024,6 +1070,12 @@ SliderChange:
     Gui, Submit, NoHide
     GuiControl,, BPM, %BPMSlider%
     BPM := BPMSlider
+    return
+
+HumanizeChange:
+    Gui, Submit, NoHide
+    HumanizeLevel := HumanizeSlider
+    GuiControl,, HumanizeText, %HumanizeLevel%%%
     return
 
 DurationChange:
