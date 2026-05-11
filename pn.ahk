@@ -1104,11 +1104,6 @@ helpText .= "* [:t'r]    -> special character chords`n"
 helpText .= "* 8         -> only the 8 key`n"
 helpText .= "* -         -> short rest (1 unit)`n"
 helpText .= "* ----      -> long rest (4 units)`n`n"
-helpText .= "CONTROLS:`n"
-helpText .= "* F1=Play/Pause | F2=Stop (customizable)`n"
-helpText .= "* F3=Reset | F12=Record Mode | ESC=Emergency Stop`n"
-helpText .= "* PageUp/PageDown = Change BPM`n"
-helpText .= "* SET button = Custom key bindings`n`n"
 helpText .= "Paste virtualpiano.net sheet format directly!"
 MsgBox, 4096, Virtual Piano Help, %helpText%
 return
