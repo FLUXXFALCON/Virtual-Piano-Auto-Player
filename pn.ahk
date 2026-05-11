@@ -64,6 +64,8 @@ global ActiveHotkeys := {}
 ; Parsed note array (global for VP format)
 global ParsedNoteArray := []
 global HumanizeLevel := 30
+global HumanizeSlider
+global HumanizeText
 global HoldLevel := 80
 
 LoadSavedPaths()
