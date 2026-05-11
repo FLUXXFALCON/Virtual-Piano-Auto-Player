@@ -1,15 +1,15 @@
-easy_katyusha|||sheets\Traditional\easy_katyusha.txt
-Interstellar|||sheets\Movies\Interstellar.txt
-izmir|||sheets\Traditional\izmir.txt
-izwmirr|||sheets\Traditional\izwmirr.txt
-kalinka|||sheets\Traditional\kalinka.txt
-katysuha|||sheets\Traditional\katysuha.txt
-katysuha_full|||sheets\Traditional\katysuha_full.txt
-La maritza|||sheets\Other\La maritza.txt
-Passacaglia|||sheets\Classical\Passacaglia.txt
-rush e|||sheets\Other\rush e.txt
-sans|||sheets\Games\sans.txt
-Tetris|||sheets\Games\Tetris.txt
-The Rose Garden|||sheets\Other\The Rose Garden.txt
-valse|||sheets\Classical\valse.txt
-Kambulat|||sheets\Other\Kambulat.txt
+easy_katyusha|||sheets\easy_katyusha.txt
+Interstellar|||sheets\Interstellar.txt
+izmir|||sheets\izmir.txt
+izwmirr|||sheets\izwmirr.txt
+kalinka|||sheets\kalinka.txt
+katysuha|||sheets\katysuha.txt
+katysuha_full|||sheets\katysuha_full.txt
+La maritza|||sheets\La maritza.txt
+Passacaglia|||sheets\Passacaglia.txt
+rush e|||sheets\rush e.txt
+sans|||sheets\sans.txt
+Tetris|||sheets\Tetris.txt
+The Rose Garden|||sheets\The Rose Garden.txt
+valse|||sheets\valse.txt
+Kambulat|||sheets\Kambulat.txt

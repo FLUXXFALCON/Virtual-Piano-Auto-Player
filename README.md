@@ -14,7 +14,7 @@ Virtual Piano (virtualpiano.net) sheet music formatını otomatik olarak çalan,
 ## Klasör Yapısı
 
 - `pn.ahk`: Ana uygulama dosyası.
-- `sheets/`: Kategorize edilmiş nota sayfaları (Classical, Games, Movies, Traditional, Other).
+- `sheets/`: Tüm nota sayfalarının (sheets) toplandığı klasör.
 - `LICENSE`: MIT Lisans dosyası.
 - `README.md`: Proje dökümantasyonu.
 
