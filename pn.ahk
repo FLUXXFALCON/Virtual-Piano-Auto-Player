@@ -1110,7 +1110,7 @@ helpText .= "* F3=Reset | F12=Record Mode | ESC=Emergency Stop`n"
 helpText .= "* PageUp/PageDown = Change BPM`n"
 helpText .= "* SET button = Custom key bindings`n`n"
 helpText .= "Paste virtualpiano.net sheet format directly!"
-MsgBox, 0, Virtual Piano Help, %helpText%
+MsgBox, 4096, Virtual Piano Help, %helpText%
 return
 
 ; ============================================================
