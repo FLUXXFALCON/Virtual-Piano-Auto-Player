@@ -1,30 +1,30 @@
 # Virtual Piano Auto Player (Performance Edition)
 
-Virtual Piano (virtualpiano.net) sheet music formatını otomatik olarak çalan, AutoHotkey tabanlı bir yardımcı araçtır.
+An AutoHotkey-based assistant tool that automatically plays Virtual Piano (virtualpiano.net) sheet music with high precision.
 
-## Özellikler
+## Features
 
-- **Gelişmiş Parser**: VP formatındaki notaları, akorları (`[6fj]`), modifierları ve duraklamaları (`-`, `|`) doğru şekilde analiz eder.
-- **Hassas Zamanlama**: QPC (Query Performance Counter) motoru ile yüksek hassasiyetli vuruşlar.
-- **BPM Kontrolü**: Çalma sırasında gerçek zamanlı tempo (BPM) ayarı.
-- **Döngü (Loop)**: Parçaları sürekli tekrar etme özelliği.
-- **Özelleştirilebilir Tuşlar**: Play/Pause ve Stop komutlarını istediğiniz tuşa atayabilirsiniz.
-- **Ekran Yakalama Koruması**: Kayıt yaparken GUI'yi gizleme seçeneği.
+- **Advanced Parser**: Accurately analyzes VP format notes, chords (`[6fj]`), modifiers, and rests (`-`, `|`).
+- **Precision Timing**: High-precision beat engine powered by QPC (Query Performance Counter).
+- **Real-time BPM Control**: Adjust the tempo (BPM) on the fly during playback.
+- **Loop Mode**: Seamlessly repeat your favorite tracks.
+- **Customizable Hotkeys**: Bind Play/Pause and Stop commands to any key you prefer.
+- **Screen Capture Protection**: Option to hide the GUI while recording or streaming.
 
-## Klasör Yapısı
+## Folder Structure
 
-- `pn.ahk`: Ana uygulama dosyası.
-- `sheets/`: Tüm nota sayfalarının (sheets) toplandığı klasör.
-- `LICENSE`: MIT Lisans dosyası.
-- `README.md`: Proje dökümantasyonu.
+- `pn.ahk`: Main application script.
+- `sheets/`: Folder containing all sheet music files.
+- `LICENSE`: MIT License file.
+- `README.md`: Project documentation.
 
-## Kullanım
+## How to Use
 
-1. `pn.ahk` dosyasını çalıştırın (AutoHotkey yüklü olmalıdır).
-2. Sheet music alanına çalmak istediğiniz notaları yapıştırın.
-3. BPM değerini ayarlayın.
-4. `PLAY` butonuna basın veya atadığınız kısayol tuşunu (Varsayılan: `F1`) kullanın.
+1. Run `pn.ahk` (Requires [AutoHotkey](https://www.autohotkey.com/) to be installed).
+2. Paste your sheet music into the input area.
+3. Adjust the BPM as needed.
+4. Press `PLAY` or use your assigned hotkey (Default: `F1`).
 
-## Lisans
+## License
 
-Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
+This project is licensed under the [MIT License](LICENSE).
