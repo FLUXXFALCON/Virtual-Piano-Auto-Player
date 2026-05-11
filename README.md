@@ -1,4 +1,4 @@
-# Virtual Piano Auto Player (Performance Edition)
+# Virtual Piano Auto Player
 
 An AutoHotkey-based assistant tool that automatically plays Virtual Piano (virtualpiano.net) sheet music with high precision.
 
